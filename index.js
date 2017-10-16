@@ -1,62 +1,86 @@
-require('./app/index');
-const _ = require('lodash');
+// Base server
+// const http = require('http');
+// const port = 3000;
 
-_.assign({'a': 1}, {'b': 2}, {'c': 3});
+// const requestHandler = (request, response) => {
+//   console.log(request.url);
+//   response.end('Hello Node.js Server!');
+// };
 
-// higher-order functions
-const numbers = [2, 4, 1, 5, 4];
+// const server = http.createServer(requestHandler);
 
-function isBigggerThanTwo(num) {
-  return num > 2;
-}
+// server.listen(port, (err) => {
+//   if (err) {
+//     return console.log('something bad happened', err);
+//   }
 
-console.log(numbers.filter(isBigggerThanTwo));
+//   console.log(`server is listening on ${port}`);
+// });
 
-// sync file reader
-const fs = require('fs');
-let content;
+// Middleares
+// const express = require('express');
+// const app = express();
+// const port = 3000;
 
-try {
-  content = fs.readFileSync('file.md', 'utf-8');
-} catch (ex) {
-  console.log(ex);
-}
+// app.use((request, response, next) => {
+//   console.log(request.headers);
+//   next();
+// });
 
-console.log(content);
+// app.use((request, response, next) => {
+//   request.chance = Math.random();
+//   next();
+// });
 
-// error-first callback
-// error-handling
-// no return value
-console.log('start reading a file...');
+// app.get('/', (request, response) => {
+//   // response.send('Hello from Express!');
+//   // response.json({
+//   //   chance: request.chance
+//   // });
+//   throw new Error('oops');
+// });
 
-fs.readFile('file.md', 'utf-8', function(err, content) {
-  if (err) {
-    console.log('error happened during reading the file');
-    return console.log(err);
-  }
+// app.use((err, request, response, next) => {
+//   // log the error, for now just console.log
+//   console.log(err);
+//   response.status(500).send('Something broke!');
+// });
 
-  console.log(content);
+// app.listen(port, (err) => {
+//   if (err) {
+//     return console.log('something bad happened', err);
+//   }
+
+//   console.log(`server is listening on ${port}`);
+// });
+
+// HTML
+const path = require('path');
+const express = require('express');
+const exphbs = require('express-handlebars');
+
+const app = express();
+const port = 3000;
+
+app.engine('.hbs', exphbs({
+  defaultLayout: 'main',
+  extname: '.hbs',
+  layoutDir: path.join(__dirname, 'views/layouts')
+}));
+
+app.set('view engine', '.hbs');
+app.set('views', path.join(__dirname, 'views'));
+
+app.get('/', (request, response) => {
+  response.render('home', {
+    name: 'John'
+  });
 });
 
-console.log('end of the file');
+app.listen(port, (err) => {
+  if (err) {
+    return console.log('something bad happened', err);
+  }
 
-// promises
-function stats(file) {
-  return new Promise((resolve, reject) => {
-    fs.stat(file, (err, data) => {
-      if (err) {
-        return reject(err);
-      }
-
-      resolve(data);
-    });
-  });
-}
-
-Promise.all([
-  stats('file1'),
-  stats('file2'),
-  stats('file3')
-])
-.then((data) => console.log(data))
-.catch((err) => console.log(err));
+  console.log(`server is listening on ${port}`);
+});
