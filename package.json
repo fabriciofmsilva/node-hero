@@ -11,9 +11,11 @@
   "author": "Fabrício Silva <fabriciofmsilva@gmail.com> (http://www.fabriciofmsilva.com.br/)",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.2",
     "express-handlebars": "^3.0.0",
-    "lodash": "^4.17.4"
+    "lodash": "^4.17.4",
+    "pg": "^7.3.0"
   },
   "devDependencies": {
     "mocha": "^4.0.1"
