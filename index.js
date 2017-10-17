@@ -200,6 +200,100 @@ app.post('/users', (request, response, next) => {
   });
 });
 
+const rp = require('request-promise');
+
+const getRequest = () => {
+  const options = {
+    method: 'GET',
+    uri: 'https://risingstack.com'
+  };
+
+  rp(options)
+    .then((response) => {
+      // request was successful, use the response object at will
+    })
+    .catch((err) => {
+      // something bad happened, handle error
+    });
+};
+
+const postRequest = () => {
+  const option = {
+    method: 'POST',
+    uri: 'https://risingstack.com/login',
+    body: {
+      foo: 'bar'
+    },
+    // JSON stringifies the body automatically
+    json: true
+  };
+
+  rp(options)
+    .then((response) => {
+      // handle the response
+    })
+    .catch((err) => {
+      // deal with the error
+    });
+};
+
+const queryStringRequest = () => {
+  const option = {
+    method: 'GET',
+    uri: 'https://risingstack.com',
+    qs: {
+      limit: 10,
+      skip: 20,
+      sort: 'asc'
+    }
+  };
+
+  rp(options)
+    .then((response) => {
+      // handle the response
+    })
+    .catch((err) => {
+      // deal with the error
+    });
+};
+
+const headersRequest = () => {
+  const option = {
+    method: 'GET',
+    uri: 'https://risingstack.com',
+    headers: {
+      'User-Agent': 'Request-Promise',
+      'Authorization': 'Basic QWxhZGRpbjpPcGVuU2VzYW1l'
+    }
+  };
+
+  rp(options)
+    .then((response) => {
+      // handle the response
+    })
+    .catch((err) => {
+      // deal with the error
+    });
+};
+
+app.get('/:city', (request, response) => {
+  rp({
+    uri: 'http://apidev.accuweather.com/locations/v1/search',
+    qs: {
+      q: request.params.city,
+      apiKey: 'api-key'
+    },
+    json: true
+  })
+  .then((data) => {
+    res.render('index', data);
+  })
+  .catch((err) => {
+    console.log(err);
+    response.render('error');
+  });
+});
+
 app.listen(port, (err) => {
   if (err) {
     return console.log('something bad happened', err);
