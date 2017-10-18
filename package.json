@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "mocha test",
-    "your-custom-script": "echo npm"
+    "test": "npm run test-unit",
+    "test-unit": "NODE_ENV=test mocha --require co-mocha 'lib/*.spec.js'",
+    "test-coverage": "istanbul cover _mocha $(find ./lib -name \"*.spec.js\" -not -path \"./node_modules/*\")"
   },
   "author": "Fabrício Silva <fabriciofmsilva@gmail.com> (http://www.fabriciofmsilva.com.br/)",
   "license": "MIT",
@@ -18,9 +19,14 @@
     "express-handlebars": "3.0.0",
     "express-session": "1.13.0",
     "passport": "0.3.2",
-    "passport-local": "1.0.0"
+    "passport-local": "1.0.0",
+    "request": "2.72.0"
   },
   "devDependencies": {
-    "mocha": "^4.0.1"
+    "chai": "3.5.0",
+    "co-mocha": "1.1.2",
+    "mocha": "2.5.3",
+    "sinon": "1.17.4",
+    "sinon-chai": "2.8.0"
   }
 }
