@@ -12,7 +12,7 @@
   "author": "Fabrício Silva <fabriciofmsilva@gmail.com> (http://www.fabriciofmsilva.com.br/)",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "1.0.2",
+    "bcrypt": "^1.0.2",
     "body-parser": "1.15.1",
     "connect-redis": "3.0.2",
     "express": "4.13.4",
